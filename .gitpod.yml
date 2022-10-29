@@ -1,0 +1,4 @@
+
+tasks:
+  - name: install drogon
+    init: ./.gitpod/init.sh
