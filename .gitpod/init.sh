@@ -2,7 +2,7 @@
 
 set -o errexit
 set -o nounset
-
+set -o pipefail
 if [[ "${TRACE-0}" == "1" ]]; then
     set -o xtrace
 fi
@@ -23,7 +23,8 @@ install_deps() {
     git gcc g++ cmake \
     libjsoncpp-dev uuid-dev \
     openssl libssl-dev zlib1g-dev \
-    postgresql-all
+    postgresql-all \
+    || echo "some deps are already installed"
 }
 
 install_drogon() {
@@ -31,6 +32,8 @@ install_drogon() {
     cd $WORK_PATH
     git clone https://github.com/drogonframework/drogon
     cd drogon
+    # remove git folder
+    sudo rm -r .git
     git submodule update --init
     mkdir build
     cd build
